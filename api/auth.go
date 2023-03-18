@@ -13,7 +13,7 @@ type jwtCustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-func (a *Api) Login(c echo.Context) error {
+func (a *Api) HandleLogin(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 

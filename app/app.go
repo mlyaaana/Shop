@@ -40,4 +40,13 @@ func (a *App) Start() {
 
 func (a *App) InitRoutes() {
 	a.echo.POST("/product", a.api.HandleCreateProduct)
+	a.echo.POST("/user", a.api.HandleCreateUser)
+	a.echo.GET("/users", a.api.HandleListUsers)
+	a.echo.GET("/products", a.api.HandleListProducts)
+	a.echo.GET("/user", a.api.HandleGetUser)
+	a.echo.GET("/product", a.api.HandleGetProduct)
+	a.echo.POST("/auth", a.api.HandleLogin)
+	a.echo.POST("/register", a.api.HandleRegister)
+	a.echo.DELETE("/user", a.api.HandleDeleteUser)
+	a.echo.DELETE("/product", a.api.HandleDeleteProduct)
 }

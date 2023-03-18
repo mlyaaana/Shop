@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (a *Api) HandleListProduct(c echo.Context) error {
+func (a *Api) HandleListProducts(c echo.Context) error {
 	product := a.productService.List()
 
 	return c.JSON(http.StatusOK, product)
