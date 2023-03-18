@@ -1,8 +1,8 @@
 package user
 
 import (
-	"Shop/domain"
 	"errors"
+	"shop/domain"
 )
 
 type MapRepository struct {

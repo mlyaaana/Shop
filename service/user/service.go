@@ -1,8 +1,8 @@
 package user
 
 import (
-	"Shop/domain"
-	"Shop/repository/user"
+	"shop/domain"
+	"shop/repository/user"
 )
 
 type Service struct {

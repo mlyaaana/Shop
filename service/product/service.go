@@ -1,8 +1,8 @@
 package product
 
 import (
-	"Shop/domain"
-	"Shop/repository/product"
+	"shop/domain"
+	"shop/repository/product"
 )
 
 type Service struct {
@@ -15,8 +15,8 @@ func NewService(repo product.Repository) *Service {
 	}
 }
 
-func (s *Service) Create(product *domain.Product) {
-	s.repo.Create(product)
+func (s *Service) Create(product *domain.Product) error {
+	return s.repo.Create(product)
 }
 
 func (s *Service) Get(id string) (*domain.Product, error) {

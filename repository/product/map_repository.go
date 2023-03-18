@@ -1,8 +1,8 @@
 package product
 
 import (
-	"Shop/domain"
 	"errors"
+	"shop/domain"
 )
 
 type MapRepository struct {
@@ -15,8 +15,9 @@ func NewMapRepository() *MapRepository {
 	}
 }
 
-func (m *MapRepository) Create(product *domain.Product) {
+func (m *MapRepository) Create(product *domain.Product) error {
 	m.storage[product.Id] = product
+	return nil
 }
 
 func (m *MapRepository) Get(id string) (*domain.Product, error) {

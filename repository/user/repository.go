@@ -1,6 +1,6 @@
 package user
 
-import "Shop/domain"
+import "shop/domain"
 
 type Repository interface {
 	Create(user *domain.User) error
