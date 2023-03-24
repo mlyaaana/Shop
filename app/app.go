@@ -1,8 +1,11 @@
 package app
 
 import (
+	"github.com/golang-jwt/jwt/v4"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"os"
 	"shop/api"
 	"shop/repository/credentials"
 	productRepo "shop/repository/product"
@@ -39,14 +42,25 @@ func (a *App) Start() {
 }
 
 func (a *App) InitRoutes() {
-	a.echo.POST("/product", a.api.HandleCreateProduct)
-	a.echo.POST("/user", a.api.HandleCreateUser)
-	a.echo.GET("/users", a.api.HandleListUsers)
-	a.echo.GET("/products", a.api.HandleListProducts)
-	a.echo.GET("/user", a.api.HandleGetUser)
-	a.echo.GET("/product", a.api.HandleGetProduct)
-	a.echo.POST("/auth", a.api.HandleLogin)
-	a.echo.POST("/register", a.api.HandleRegister)
-	a.echo.DELETE("/user", a.api.HandleDeleteUser)
-	a.echo.DELETE("/product", a.api.HandleDeleteProduct)
+	e := a.echo
+	r := a.echo.Group("") //требует авторизацию
+	secret := os.Getenv("SECRET_KEY")
+
+	config := echojwt.Config{
+		NewClaimsFunc: func(c echo.Context) jwt.Claims {
+			return new(api.JwtCustomClaims)
+		},
+		SigningKey: []byte(secret),
+	}
+	r.Use(echojwt.WithConfig(config))
+	r.POST("/product", a.api.HandleCreateProduct)
+	r.POST("/user", a.api.HandleCreateUser)
+	r.GET("/users", a.api.HandleListUsers)
+	r.GET("/products", a.api.HandleListProducts)
+	r.GET("/user", a.api.HandleGetUser)
+	r.GET("/product", a.api.HandleGetProduct)
+	e.POST("/login", a.api.HandleLogin)
+	e.POST("/register", a.api.HandleRegister)
+	r.DELETE("/user", a.api.HandleDeleteUser)
+	r.DELETE("/product", a.api.HandleDeleteProduct)
 }

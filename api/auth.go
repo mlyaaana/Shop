@@ -4,10 +4,11 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"os"
 	"time"
 )
 
-type jwtCustomClaims struct {
+type JwtCustomClaims struct {
 	Name  string `json:"name"`
 	Admin bool   `json:"admin"`
 	jwt.RegisteredClaims
@@ -21,7 +22,7 @@ func (a *Api) HandleLogin(c echo.Context) error {
 		return err
 	}
 
-	claims := &jwtCustomClaims{
+	claims := &JwtCustomClaims{
 		"Valentina",
 		true,
 		jwt.RegisteredClaims{
@@ -31,7 +32,8 @@ func (a *Api) HandleLogin(c echo.Context) error {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err := token.SignedString([]byte("key"))
+	secret := os.Getenv("SECRET_KEY")
+	t, err := token.SignedString([]byte(secret))
 	if err != nil {
 		return err
 	}
