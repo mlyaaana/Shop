@@ -23,7 +23,7 @@ func (s *Service) Get(id string) (*domain.Product, error) {
 	return s.repo.Get(id)
 }
 
-func (s *Service) List() []*domain.Product {
+func (s *Service) List() ([]*domain.Product, error) {
 	return s.repo.List()
 }
 

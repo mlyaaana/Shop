@@ -23,7 +23,7 @@ func (s *Service) Get(id string) (*domain.User, error) {
 	return s.repo.Get(id)
 }
 
-func (s *Service) List() []*domain.User {
+func (s *Service) List() ([]*domain.User, error) {
 	return s.repo.List()
 }
 

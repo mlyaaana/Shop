@@ -7,9 +7,10 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"os"
 	"shop/api"
+	"shop/database"
 	"shop/repository/credentials"
-	productRepo "shop/repository/product"
-	userRepo "shop/repository/user"
+	productrepo "shop/repository/product"
+	userrepo "shop/repository/user"
 	"shop/service/auth"
 	"shop/service/product"
 	"shop/service/user"
@@ -21,12 +22,18 @@ type App struct {
 }
 
 func New() *App {
-	userRepository := userRepo.NewMapRepository()
-	productRepository := productRepo.NewMapRepository()
-	credentialsRepository := credentials.NewMapRepository()
+	db, err := database.New()
+	if err != nil {
+		panic(err)
+	}
+	userRepository := userrepo.NewDBRepository(db)
 	userService := user.NewService(userRepository)
-	productService := product.NewService(productRepository)
-	authService := auth.NewService(userRepository, credentialsRepository)
+	productService := product.NewService(productrepo.NewDBRepository(db))
+	authService := auth.NewService(userRepository, credentials.NewDBRepository(db))
+	//userRepository := u.NewDBRepository(db)
+	//userService := user.NewService(userRepository)
+	//productService := product.NewService(productrepo.NewDBRepository(db))
+	//authService := auth.NewService(credentials.NewDBRepository(db), userRepository)
 
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.CORS())
