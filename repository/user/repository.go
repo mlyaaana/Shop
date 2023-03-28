@@ -5,6 +5,6 @@ import "shop/domain"
 type Repository interface {
 	Create(user *domain.User) error
 	Get(id string) (*domain.User, error)
-	List() []*domain.User
+	List() ([]*domain.User, error)
 	Delete(id string)
 }
