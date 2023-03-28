@@ -10,9 +10,7 @@ type Service struct {
 }
 
 func NewService(repo product.Repository) *Service {
-	return &Service{
-		repo: repo,
-	}
+	return &Service{repo: repo}
 }
 
 func (s *Service) Create(product *domain.Product) error {

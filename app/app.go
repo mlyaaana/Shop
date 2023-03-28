@@ -8,10 +8,12 @@ import (
 	"os"
 	"shop/api"
 	"shop/database"
+	commentrepo "shop/repository/comment"
 	"shop/repository/credentials"
 	productrepo "shop/repository/product"
 	userrepo "shop/repository/user"
 	"shop/service/auth"
+	"shop/service/comment"
 	"shop/service/product"
 	"shop/service/user"
 )
@@ -26,21 +28,18 @@ func New() *App {
 	if err != nil {
 		panic(err)
 	}
+	commentService := comment.NewService(commentrepo.NewDBRepository(db))
 	userRepository := userrepo.NewDBRepository(db)
 	userService := user.NewService(userRepository)
 	productService := product.NewService(productrepo.NewDBRepository(db))
 	authService := auth.NewService(userRepository, credentials.NewDBRepository(db))
-	//userRepository := u.NewDBRepository(db)
-	//userService := user.NewService(userRepository)
-	//productService := product.NewService(productrepo.NewDBRepository(db))
-	//authService := auth.NewService(credentials.NewDBRepository(db), userRepository)
 
 	e := echo.New()
 	e.Use(middleware.Logger(), middleware.CORS())
 
 	return &App{
 		echo: e,
-		api:  api.NewApi(userService, productService, authService),
+		api:  api.NewApi(userService, productService, authService, commentService),
 	}
 }
 
