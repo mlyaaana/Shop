@@ -6,7 +6,10 @@ import (
 )
 
 func (a *Api) HandleListUsers(c echo.Context) error {
-	user := a.userService.List()
+	user, err := a.userService.List()
+	if err != nil {
+		return err
+	}
 
 	return c.JSON(http.StatusOK, user)
 }

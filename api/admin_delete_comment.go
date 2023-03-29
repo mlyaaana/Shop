@@ -5,10 +5,10 @@ import (
 	"net/http"
 )
 
-func (a *Api) HandleDeleteUser(c echo.Context) error {
+func (a *Api) HandleAdminDeleteComment(c echo.Context) error {
 	id := c.FormValue("id")
 
-	a.userService.Delete(id)
+	a.commentService.AdminDelete(id)
 
 	return c.NoContent(http.StatusNoContent)
 }

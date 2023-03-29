@@ -10,5 +10,5 @@ func (a *Api) HandleDeleteProduct(c echo.Context) error {
 
 	a.productService.Delete(id)
 
-	return c.NoContent(http.StatusOK)
+	return c.NoContent(http.StatusNoContent)
 }

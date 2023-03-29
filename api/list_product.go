@@ -6,7 +6,10 @@ import (
 )
 
 func (a *Api) HandleListProducts(c echo.Context) error {
-	product := a.productService.List()
+	product, err := a.productService.List()
+	if err != nil {
+		return err
+	}
 
 	return c.JSON(http.StatusOK, product)
 }
