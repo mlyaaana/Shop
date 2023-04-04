@@ -1,9 +1,9 @@
 package models
 
 type Credentials struct {
-	UserId   string `gorm:"user_id"`
-	Username string `gorm:"username"`
-	Password string `gorm:"password"`
+	UserId   string `gorm:"user_id;not null"`
+	Username string `gorm:"username;not null;unique"`
+	Password string `gorm:"password;not null"`
 }
 
 func (Credentials) TableName() string {

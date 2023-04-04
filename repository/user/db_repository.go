@@ -37,7 +37,7 @@ func (r *DBRepository) Get(id string) (*domain.User, error) {
 func (r *DBRepository) List() ([]*domain.User, error) {
 	var usersModels []*models.User
 	usersDomain := make([]*domain.User, 0)
-	err := r.db.Find(usersModels).Error
+	err := r.db.Find(&usersModels).Error
 	if err != nil {
 		return nil, err
 	}

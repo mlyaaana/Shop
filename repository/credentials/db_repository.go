@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 	"shop/database/models"
 	"shop/domain"
+	"shop/utils"
 )
 
 type DBRepository struct {
@@ -19,14 +20,14 @@ func (r *DBRepository) Create(credentials *domain.Credentials) error {
 	return r.db.Create(&models.Credentials{
 		UserId:   credentials.UserId,
 		Username: credentials.Username,
-		Password: credentials.Password,
+		Password: utils.MustHashPassword(credentials.Password),
 	}).Error
 }
 
 func (r *DBRepository) Get(username, password string) (string, error) {
 	var creds models.Credentials
 	r.db.Where(&models.Credentials{Username: username}).First(&creds)
-	if creds.Password == password {
+	if utils.CheckPasswordHash(password, creds.Password) {
 		return creds.UserId, nil
 	}
 

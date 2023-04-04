@@ -9,11 +9,11 @@ type Comment struct {
 	Mention   string
 }
 
-func NewComment(userid, productid, mention string) *Comment {
+func NewComment(userId, productId, mention string) *Comment {
 	return &Comment{
 		Id:        uuid.New().String(),
-		UserId:    userid,
-		ProductId: productid,
+		UserId:    userId,
+		ProductId: productId,
 		Mention:   mention,
 	}
 }

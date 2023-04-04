@@ -6,9 +6,9 @@ type Credentials struct {
 	Password string
 }
 
-func NewCredentials(userid, username, password string) *Credentials {
+func NewCredentials(userId, username, password string) *Credentials {
 	return &Credentials{
-		UserId:   userid,
+		UserId:   userId,
 		Username: username,
 		Password: password,
 	}
